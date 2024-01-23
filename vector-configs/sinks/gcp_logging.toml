@@ -1,0 +1,13 @@
+[sinks.gcp_logs]
+type = "gcp_stackdriver_logs"
+inputs = [ "log_json" ]
+log_id = "name-of-this-log-to-show-up-in-gcp"
+project_id = "imgtoslides"
+
+  [sinks.gcp_logs.resource]
+  type = "global"
+
+#[sinks.console]
+#  type = "console"
+#  inputs = [ "log_json" ]
+#  encoding.codec = "json"
