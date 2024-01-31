@@ -1,8 +1,8 @@
 [sinks.gcp_logs]
 type = "gcp_stackdriver_logs"
 inputs = [ "log_json" ]
-log_id = "name-of-this-log-to-show-up-in-gcp"
-project_id = "imgtoslides"
+log_id = "fly-logs"
+project_id = "photos-to-slides-nsl"
 
   [sinks.gcp_logs.resource]
   type = "global"

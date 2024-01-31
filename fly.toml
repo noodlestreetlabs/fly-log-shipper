@@ -3,7 +3,7 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "fly-log-shipper"
+app = "fly-log-shipper-nsl"
 primary_region = "sea"
 
 [metrics]
@@ -13,15 +13,17 @@ primary_region = "sea"
 [env]
 #  If you're shipping logs to gcp, add the service account credentials to the
 #  docker image and set this value to the location.
-#  GOOGLE_APPLICATION_CREDENTIALS = "/etc/google_creds/gcp_logging_user_credentials.json"
+  GOOGLE_APPLICATION_CREDENTIALS = "/etc/google_creds/gcp_logging_user_credentials.json"
+
+  ORG="noodlestreetlabs"
 
 #  Set a queue value to prevent multiple instances from duplicate processing
 #  the same log messages
-#  QUEUE = "my_gcp_logs_queue"
+  QUEUE = "nsl_gcp_logs_queue"
 
 #  Optionally only filter logs for the specific app name, so that you're not
 #  shipping out logs that other apps (e.g. this one) produce.
-#  SUBJECT = "logs.[APP_NAME.[REGION_NAME.[INSTANCE_NAME.]]]>"
+  SUBJECT = "logs.photos-to-slides-nsl.>"
 
 [[services]]
   http_checks = []
@@ -32,6 +34,6 @@ primary_region = "sea"
 
 [[vm]]
   size = "shared-cpu-1x"
-  memory_mb = 512
+  memory_mb = 256
 
   
