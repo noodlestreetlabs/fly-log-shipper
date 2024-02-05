@@ -3,6 +3,7 @@ type = "gcp_stackdriver_logs"
 inputs = [ "log_json" ]
 log_id = "fly-logs"
 project_id = "photos-to-slides-nsl"
+severity_key = "message.level"
 
   [sinks.gcp_logs.resource]
   type = "global"
