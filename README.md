@@ -8,11 +8,11 @@ Use gcloud command line to...
 
 1. Create a new logging bucket that will eventually store logs
 ```
-gcloud logging buckets create my-new-logs-bucket --location=global --retention-days=180 --description="some description"
+gcloud logging buckets create application-logs --location=global --retention-days=180 --description="some description"
 ```
 2. Create a new logging sink that will receive the logs from the shipper and write them to the bucket
 ```
-gcloud logging sinks create my-new-log-sink my-new-logs-bucket [--description=DESCRIPTION]  --project=PROJECT_ID
+gcloud logging sinks create application-logs-sink logging.googleapis.com/projects/PROJECT_ID/locations/global/buckets/application-logs [--description=DESCRIPTION]  --project=PROJECT_ID
 ```
 3. Create a new service account user
 ```

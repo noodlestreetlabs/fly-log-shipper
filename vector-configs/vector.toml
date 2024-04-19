@@ -5,16 +5,14 @@
 [sources.fly_log_metrics]
   type = "internal_metrics"
 
-[sources.nats]
-  type = "nats"
-  url = "nats://[fdaa::3]:4223"
-  queue = "${QUEUE-}"
-  subject = "${SUBJECT-logs.>}"
-  auth.strategy = "user_password"
-  auth.user_password.user = "${ORG-personal}"
-  auth.user_password.password = "${ACCESS_TOKEN?}"
-  connection_name = "Fly logs stream"
+[sinks.fly_log_metrics_prometheus]
+  type = "prometheus_exporter" # required
+  inputs = ["fly_log_metrics"] # required
+  address = "0.0.0.0:9598" # required
+  default_namespace = "fly-logs" # optional, no default
 
+# NOTE: the log_transform sources below are customized for noodlestreetlabs.
+#
 # This transform is a little different from the supafly/fly-log-shipper version.
 # The reason is that my applications normally log production messages as json,
 # but occasionally something else on the machine (another library/process/etc)
@@ -38,21 +36,52 @@
 #   field contains a string instead of well-formatted json, and instead create
 #   an object like { "msg": "some string", "unstructured_log": true } to ship.
 
-[transforms.log_json]
+
+#
+# photos_to_slides
+#
+
+[sources.nats_p2s]
+  type = "nats"
+  url = "nats://[fdaa::3]:4223"
+  queue = "${QUEUE_P2S-}"
+  subject = "${SUBJECT_P2S-unset.>}"
+  auth.strategy = "user_password"
+  auth.user_password.user = "${ORG-personal}"
+  auth.user_password.password = "${ACCESS_TOKEN?}"
+  connection_name = "Fly logs stream"
+
+[transforms.log_json_p2s]
   type = "remap"
-  inputs = ["nats"]
+  inputs = ["nats_p2s"]
   source = '''
   . = parse_json(.message) ?? .message
   .message = object(parse_json!(.message)) ?? { "msg": string(.message), "unstructured_log": true } ?? .message
   '''
 
-[sinks.fly_log_metrics_prometheus]
-  type = "prometheus_exporter" # required
-  inputs = ["fly_log_metrics"] # required
-  address = "0.0.0.0:9598" # required
-  default_namespace = "fly-logs" # optional, no default
+#
+# marketplace_crawler
+#
+
+[sources.nats_mpc]
+  type = "nats"
+  url = "nats://[fdaa::3]:4223"
+  queue = "${QUEUE_MPC-}"
+  subject = "${SUBJECT_MPC-unset.>}"
+  auth.strategy = "user_password"
+  auth.user_password.user = "${ORG-personal}"
+  auth.user_password.password = "${ACCESS_TOKEN?}"
+  connection_name = "Fly logs stream"
+
+[transforms.log_json_mpc]
+  type = "remap"
+  inputs = ["nats_mpc"]
+  source = '''
+  . = parse_json(.message) ?? .message
+  .message = object(parse_json!(.message)) ?? { "msg": string(.message), "unstructured_log": true } ?? .message
+  '''
 
 [sinks.blackhole]
   type = "blackhole"
-  inputs = ["log_json"]
+  inputs = ["log_json_p2s", "log_json_mpc"]
   print_interval_secs = 100000

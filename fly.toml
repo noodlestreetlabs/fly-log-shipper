@@ -11,19 +11,21 @@ primary_region = "sea"
   port = 9598
 
 [env]
-#  If you're shipping logs to gcp, add the service account credentials to the
-#  docker image and set this value to the location.
-  GOOGLE_APPLICATION_CREDENTIALS = "/etc/google_creds/gcp_logging_user_credentials.json"
-
   ORG="noodlestreetlabs"
 
-#  Set a queue value to prevent multiple instances from duplicate processing
-#  the same log messages
-  QUEUE = "nsl_gcp_logs_queue"
+  #  Set a queue value to prevent multiple instances from duplicate processing
+  #  the same log messages
+  #  QUEUE = "some_queue_name"
+  #
+  #  Optionally only filter logs for the specific app name, so that you're not
+  #  shipping out logs that other apps (e.g. this one) produce.
+  #  SUBJECT = "logs.log-name.>""
 
-#  Optionally only filter logs for the specific app name, so that you're not
-#  shipping out logs that other apps (e.g. this one) produce.
-  SUBJECT = "logs.photos-to-slides-nsl.>"
+  QUEUE_P2S = "nsl_gcp_logs_queue_p2s"
+  SUBJECT_P2S = "logs.photos-to-slides-nsl.>"
+
+  QUEUE_MPC = "nsl_gcp_logs_queue_mpc"
+  SUBJECT_MPC = "logs.marketplace-crawler-nsl.>"
 
 [[services]]
   http_checks = []

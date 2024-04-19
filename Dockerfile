@@ -5,7 +5,8 @@ COPY vector-configs /etc/vector/
 # If using the google logs sink, copy your service account credentials
 # file to a known location and set the GOOGLE_APPLICATION_CREDENTIALS
 # environment variable to point to this file.
-COPY gcp_logging_user_credentials.json /etc/google_creds/
+COPY gcp_logging_user_credentials_photos_to_slides.json /etc/google_creds/
+COPY gcp_logging_user_credentials_marketplace_crawler.json /etc/google_creds/
 
 COPY ./start-fly-log-transporter.sh .
 
