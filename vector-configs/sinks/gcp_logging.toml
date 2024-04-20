@@ -5,7 +5,7 @@
 [sinks.gcp_logs_p2s]
 type = "gcp_stackdriver_logs"
 inputs = [ "log_json_p2s" ]
-log_id = "fly-logs-nsl"
+log_id = "fly-logs-p2s"
 project_id = "photos-to-slides-nsl"
 severity_key = "message.level"
 credentials_path = "/etc/google_creds/gcp_logging_user_credentials_photos_to_slides.json"
