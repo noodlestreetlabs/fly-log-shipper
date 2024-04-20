@@ -5,7 +5,7 @@
 [sinks.gcp_logs_p2s]
 type = "gcp_stackdriver_logs"
 inputs = [ "log_json_p2s" ]
-log_id = "fly-logs"
+log_id = "fly-logs-nsl"
 project_id = "photos-to-slides-nsl"
 severity_key = "message.level"
 credentials_path = "/etc/google_creds/gcp_logging_user_credentials_photos_to_slides.json"
@@ -20,7 +20,7 @@ type = "global"
 [sinks.gcp_logs_mpc]
 type = "gcp_stackdriver_logs"
 inputs = [ "log_json_mpc" ]
-log_id = "fly-logs"
+log_id = "fly-logs-mpc"
 project_id = "marketplace-crawler-414020"
 severity_key = "message.level"
 credentials_path = "/etc/google_creds/gcp_logging_user_credentials_marketplace_crawler.json"
