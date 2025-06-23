@@ -24,6 +24,9 @@ primary_region = "sea"
   QUEUE_P2S = "nsl_gcp_logs_queue_p2s"
   SUBJECT_P2S = "logs.photos-to-slides-nsl.>"
 
+  QUEUE_P2S_PROXY = "nsl_gcp_logs_queue_p2s_proxy"
+  SUBJECT_P2S_PROXY = "logs.image-proxy-nsl.>"
+
   QUEUE_MPC = "nsl_gcp_logs_queue_mpc"
   SUBJECT_MPC = "logs.marketplace-crawler-nsl.>"
 

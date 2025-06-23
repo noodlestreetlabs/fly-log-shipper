@@ -13,6 +13,17 @@ credentials_path = "/etc/google_creds/gcp_logging_user_credentials_photos_to_sli
 [sinks.gcp_logs_p2s.resource]
 type = "global"
 
+[sinks.gcp_logs_p2s_proxy]
+type = "gcp_stackdriver_logs"
+inputs = [ "log_json_p2s_proxy" ]
+log_id = "fly-logs-p2s-proxy"
+project_id = "photos-to-slides-nsl"
+severity_key = "message.level"
+credentials_path = "/etc/google_creds/gcp_logging_user_credentials_photos_to_slides.json"
+
+[sinks.gcp_logs_p2s_proxy.resource]
+type = "global"
+
 #
 # marketplace-crawler
 #
